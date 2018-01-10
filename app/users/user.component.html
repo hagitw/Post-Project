@@ -1,0 +1,150 @@
+<div *ngIf="ShowUsers">
+    wellcome to users :
+    <h1>Users</h1>
+    <button (click)="GoAddUser()">Add Users</button>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of arrusers ; let i = index">
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td><i (click)="edit(user)" class="glyphicon glyphicon-edit"></i></td>
+                <td  ><i (click)="deletuser(user)" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" class="glyphicon glyphicon-remove"></i></td>
+            </tr>
+        </tbody>
+    </table>
+     <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">message</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete this user?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button"  (click)="delete()" class="btn btn-default" data-dismiss="modal">yes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+ </div> 
+
+<!--Edit User Form-->
+
+    <div *ngIf="Showedituser" class="container">
+        <h1>Edit User</h1>
+        <form class="well form-horizontal" #trvForm="ngForm" (ngSubmit)="EsubmitHandler(trvForm)" style="background-color:#ebeff2">
+            <div class="form-group">
+                <h1>User</h1>
+                <label for="idName">Name</label>
+                <input id="idName" name="name" type="text" class="form-control" required [(ngModel)]="name" #trvName="ngModel">
+                <div *ngIf="trvName.errors && (trvName.dirty || trvName.touched)" class="alert alert-danger">
+                    <div [hidden]="!trvName.errors.required">Name is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="idemail">Email</label>
+                <input id="idemail" name="email" type="email" email class="form-control" required [(ngModel)]="email" #trvEmail="ngModel">
+                <div *ngIf="trvEmail.errors && (trvEmail.dirty || trvEmail.touched)" class="alert alert-danger">
+                    <div [hidden]="!trvEmail.errors.required">Email is required</div>
+                       <div [hidden]="!trvEmail.errors.email">invalid email</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="idphone">Phone</label>
+                <input id="idphone" name="phone" type="text" class="form-control" required [(ngModel)]="phone" #trvPhone="ngModel">
+                <div *ngIf="trvPhone.errors && (trvPhone.dirty || trvPhone.touched)" class="alert alert-danger">
+                    <div [hidden]="!trvPhone.errors.required">Phone is required</div>
+                </div>
+            </div>
+              <div class="form-group">  
+                <h1>Address</h1>
+                <label for="idstreet">Street</label>
+                <input id="idstreet" name="street"  type="text" class="form-control" required [(ngModel)]="street"
+                    #trvStreet="ngModel">
+                <div *ngIf="trvStreet.errors && (trvStreet.dirty || trvStreet.touched)" class="alert alert-danger">
+                    <div [hidden]="!trvStreet.errors.required">Street is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="idSuite">Suite</label>
+                <input id="idSuite" name="suite" type="text" class="form-control" required [(ngModel)]="suite" #trvSuite="ngModel">
+                <div *ngIf="trvSuite.errors && (trvSuite.dirty || trvSuite.touched)" class="alert alert-danger">
+                    <div [hidden]="!trvSuite.errors.required">Suite is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="idCity">City</label>
+                <input id="idCity" name="city" type="text" class="form-control" required [(ngModel)]="city" #trvCity="ngModel">
+                <div *ngIf="trvCity.errors && (trvCity.dirty || trvCity.touched)" class="alert alert-danger">
+                    <div [hidden]="!trvCity.errors.required">City is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="idZipCode">ZipCode</label>
+                <input id="idZipCode" name="zipcode" type="text" class="form-control" required [(ngModel)]="zipcode" #trvZipCode="ngModel">
+                <div *ngIf="trvZipCode.errors && (trvZipCode.dirty || trvZipCode.touched)" class="alert alert-danger">
+                    <div [hidden]="!trvZipCode.errors.required">ZipCode is required</div>
+                </div>
+            </div>
+            <button [disabled]="!trvForm.valid" class="btn btn-primary">Save</button>
+            <p>{{errorsMassage}}</p>
+        </form>
+    </div>
+
+ <!--Add User Form-->
+
+        <div *ngIf="Showadduser" class="container">
+            <h2>wellcome to adduser</h2>
+            <form class="well form-horizontal" #trvForm="ngForm" (ngSubmit)="formaddnewuser(trvForm)" style="background-color:#ebeff2">
+                <div class="form-group">
+                    <h1>User</h1>
+                    <label for="idName">Name</label>
+                    <input id="idName" name="name" type="text" class="form-control" required [(ngModel)]="name" #trvName="ngModel">
+                    <div *ngIf="trvName.errors && (trvName.dirty || trvName.touched)" class="alert alert-danger">
+                        <div [hidden]="!trvName.errors.required">Name is required</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="idemail">Email</label>
+                    <input id="idemail" name="email" type="text" class="form-control"  [(ngModel)]="email" #trvEmail="ngModel">
+                    <div *ngIf="trvEmail.errors && (trvEmail.dirty || trvEmail.touched)" class="alert alert-danger">
+                        <div [hidden]="!trvEmail.errors.required">Email is required</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="idphone">Phone</label>
+                    <input id="idphone" name="phone" type="number" class="form-control"  [(ngModel)]="phone" #trvPhone="ngModel">                   
+                </div>
+                <div class="form-group">
+                    <h1>Address</h1>
+                    <label for="idstreet">Street</label>
+                    <input id="idstreet" name="street" type="text" class="form-control"  [(ngModel)]="street" #trvStreet="ngModel">                   
+                </div>
+                <div class="form-group">
+                    <label for="idSuite">Suite</label>
+                    <input id="idSuite" name="suite" type="text" class="form-control"  [(ngModel)]="suite" #trvSuite="ngModel">                 
+                </div>
+                <div class="form-group">
+                    <label for="idCity">City</label>
+                    <input id="idCity" name="city" type="text" class="form-control"  [(ngModel)]="city" #trvCity="ngModel">                               
+                </div>
+                <div class="form-group">
+                    <label for="idZipCode">ZipCode</label>
+                    <input id="idZipCode" name="zipcode" type="text" class="form-control"  [(ngModel)]="zipcode" #trvZipCode="ngModel">                 
+                </div>
+                <button [disabled]="!trvForm.valid" class="btn btn-primary">Save</button>
+            </form>
+        </div>
